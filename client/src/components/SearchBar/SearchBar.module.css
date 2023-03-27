@@ -1,0 +1,92 @@
+.searchBarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filterSelect {
+    display: flex;
+    gap: 1rem;
+    margin-left: 1.5em;
+}
+
+.filterSelect select,
+.searchGame select {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    background-color: #C5FCEE;
+    color: #191520;
+    cursor: pointer;
+}
+
+.searchGame {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-right: 1.5rem;
+}
+
+.searchGame input[type="search"] {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    background-color: #C5FCEE;
+    color: #191520;
+}
+
+.searchGame button {
+    font-size: 0.8rem;
+    padding: 0.55rem 1rem;
+    border: none;
+    border-radius: 0.25rem;
+    background-color: transparent;
+    color: #C5FCEE;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 10px #C5FCEE;
+}
+
+.searchGame button:hover {
+    background-color: #00C9A3;
+    color: #191520;
+}
+
+/* Media queries para pantallas más pequeñas */
+
+@media (max-width: 768px) {
+
+    .searchBarContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+    }
+
+    .filterSelect {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1.5rem;
+    }
+
+    .filterSelect select {
+        margin-bottom: 0.1rem;
+        margin-right: 2rem;
+    }
+
+    .searchGame {
+        justify-content: center;
+        margin: 0;
+        /* margin-left: 1.5rem;*/
+        margin-top: 0.8rem;
+    }
+
+    .searchGame select {
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+}

@@ -1,0 +1,66 @@
+.containerAbout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 20px 10px 20px;
+    box-shadow: 0 0 10px #C5FCEE;
+    border-radius: 10px;
+}
+
+.informacionAbout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.myInfo {
+    max-width: 600px;
+    margin: 10px;
+}
+
+.myInfo h1 {
+    font-size: 32px;
+    color: #00C9A3;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.myInfo p {
+    font-size: 18px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.myPhoto {
+    max-width: 400px;
+    margin: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #C5FCEE;
+    box-shadow: 0 0 10px #C5FCEE;
+}
+
+.myPhoto img {
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (min-width: 768px) {
+    .containerAbout{
+        flex-direction: column;
+    }
+
+    .informacionAbout {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .myInfo {
+        margin: 20px;
+    }
+
+    .myPhoto {
+        margin: 20px;
+    }
+}
