@@ -16,13 +16,6 @@ const SearchBar = () => {
     const [orderGenre, setOrderGenre] = useState("");
     const [orderCreated, setOrderCreated] = useState("");
 
-    // Estado validador
-    // const [validar, setValidar] = useState({
-    //     validarOrderABC: false,
-    //     validarOrderRating: false,
-    //     validarOrderCreated: false
-    // })
-
     // FILTRADO DE VIDEJUEGOS
     const handleOrderABC = (event) => {
         setOrderABC(event.target.value)

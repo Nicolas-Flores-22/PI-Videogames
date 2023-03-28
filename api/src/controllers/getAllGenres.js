@@ -20,21 +20,6 @@ const URL_API = `https://api.rawg.io/api/genres?key=${API_KEY}`;
 // Esta función devuelve los géneros de la API
 const getAllGenres = async () => {
 
-    // const infoDB = await Genre.findAll();
-
-    // if (!infoDB.length) {
-    //     const { results } = (await axios(URL_API)).data;
-
-    //     const allGenres = results.map(genre => ({ name: genre.name }));
-
-    //     await Genre.bulkCreate(allGenres);
-
-    //     return allGenres;
-    // }
-
-    // // console.log('Soy el log de getAllGenres', allGenres.length);
-    // return infoDB.map(genre => ({ name: genre.name }));
-
     // Traemos los géneros de la API
     
     let infoApi = await axios.get(URL_API);

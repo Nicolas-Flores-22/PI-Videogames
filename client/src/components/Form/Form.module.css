@@ -40,6 +40,7 @@
     border-radius: 5px;
     box-sizing: border-box;
     color: #191520;
+    text-align: center;
 }
 
 .containerForm input::placeholder,
@@ -62,7 +63,7 @@
     color: #191520;
     min-height: 100px;
     height: auto;
-    text-align: center;
+    /* text-align: center; */
     /* Centrar el placeholder */
 }
 

@@ -13,7 +13,7 @@ const gamesRouter = Router();
 gamesRouter.get('/', async (request, response) => {
     try {
         const allGames = await getAllGames();
-        // console.log(allGames)
+        
         return response.status(200).json(allGames);
     } catch (error) {
         return response.status(404).json({ error: error.message });
@@ -24,7 +24,6 @@ gamesRouter.get('/', async (request, response) => {
 gamesRouter.get('/name', async (request, response) => {
     const games = await getGamesByName(request.query.name);
     try {
-        // console.log(games);
         if (games.length === 0) throw new Error(`No se encontraron resultados con el nombre ingresado: '${request.query.name}'`);
 
         if (games.error) return response.status(404).json(games);
@@ -39,8 +38,6 @@ gamesRouter.get('/:id', async (request, response) => {
     const { id } = request.params;
     try {
         const videogame = await getGameById(id);
-        // console.log(videogame);
-        // if (videogame.error) throw new Error(videogame.error);
 
         return response.status(200).json(videogame);
     } catch (error) {

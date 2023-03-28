@@ -1,16 +1,17 @@
 import style from './Form.module.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actualizarGames, addGame, postGame } from "../../redux/actions/actions";
+// import { useNavigate } from "react-router-dom";
 
 // importamos nuestro archivo validate
 import validate from './validation';
 
 const Form = () => {
     const dispatch = useDispatch();
+    // const navigate = useNavigate();
 
     const genres = useSelector((state) => state.genres);
-    const games = useSelector((state) => state.games);
 
     const optionsGenres = Array.isArray(genres)
         ? genres.map((genre) => ({
@@ -54,12 +55,15 @@ const Form = () => {
                 [property]: value
             })
         );
-
     };
 
     const changeHandlerPlatforms = (event) => {
         const value = event.target.value;
+        // utilizamos una como separador con el split(). Luego utilizamos un map para ejecutar la función
+        // trim() y esta función elimina cualquier espacio en blano tanto al principio como al final de cada
+        // plataforma infresada en el input
         const platformsArray = value.split(',').map(platform => platform.trim());
+        console.log(platformsArray)
         setForm({
             ...form,
             platforms: platformsArray
@@ -93,6 +97,7 @@ const Form = () => {
         const createGame = dispatch(postGame(form));
         if (createGame) {
             dispatch(addGame());
+            dispatch(actualizarGames());
 
             // Limpiamos los campos del formulario
             setForm({
@@ -104,14 +109,11 @@ const Form = () => {
                 rating: "",
                 genreId: [],
             });
-            
-            return ()=> dispatch(actualizarGames());
+
+            // navigate('/home');
+            // window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
-
-    // useEffect(() => {
-    //     dispatch(actualizarGames())
-    // }, [dispatch, games])
 
     return (
         <div className={style.containerForm}>

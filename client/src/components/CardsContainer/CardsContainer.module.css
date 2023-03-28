@@ -57,7 +57,6 @@
     box-sizing: border-box;
     flex-wrap: wrap;
     justify-content: center;
-    /* justify-items: space-around; */
 }
 
 /* .containerCards>* {
@@ -66,13 +65,13 @@
 } */
 
 @media only screen and (max-width: 768px) {
-    .containerCards>* {
+    /* .containerCards>* {
         flex: 0 0 calc(33.3333% - 1rem);
-    }
+    } */
 }
 
 @media only screen and (max-width: 576px) {
-    .containerCards>* {
+    /* .containerCards>* {
         flex: 0 0 calc(50% - 1rem);
-    }
+    } */
 }

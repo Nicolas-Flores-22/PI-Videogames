@@ -37,21 +37,21 @@ const validate = (form) => {
     }
 
     //VALIDANDO PLATFORM
-    if (form.platforms.length === 0) {
-        errors.platforms = 'Debe especificar al menos una plataforma.';
+    if (!form.platforms || form.platforms.length === 0) {
+        errors.platforms = 'Debe ingresar al menos una plataforma.';
     } else {
-        const platformErrors = [];
-        form.platforms.forEach((platform) => {
+        for (let i = 0; i < form.platforms.length; i++) {
+            const platform = form.platforms[i];
             if (platform.length < 2) {
-                platformErrors.push('La plataforma debe tener al menos 2 caracteres.');
+                errors.platforms = 'Cada plataforma debe tener al menos 2 caracteres.';
+                break;
             } else if (specialCharsRegex.test(platform)) {
-                platformErrors.push('La plataforma no puede contener caracteres especiales.');
+                errors.platforms = 'Las plataformas no pueden contener caracteres especiales.';
+                break;
             } else if (!spacesRegex.test(platform)) {
-                platformErrors.push('La plataforma no puede tener espacios vacíos al comienzo o al final.');
+                errors.platforms = 'Las plataformas no pueden tener espacios vacíos al comienzo o al final.';
+                break;
             }
-        });
-        if (platformErrors.length > 0) {
-            errors.platforms = platformErrors;
         }
     }
 
