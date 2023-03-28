@@ -1,11 +1,12 @@
 // Importamos las actions types
-import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ACTUALIZAR_ESTADO_GAMES, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME } from "../actions/types";
+import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ACTUALIZAR_ESTADO_GAMES, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME, STANDBY_LOAD, LOAD_DONE } from "../actions/types";
 
 const initialState = {
     games: [],
     // allgames: [],
     detailGame: [],
     genres: [],
+    isLoading: true,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -82,6 +83,18 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 games: filteredGame,
+            }
+
+        case STANDBY_LOAD:
+            return {
+                ...state,
+                isLoading: true,
+            }
+
+        case LOAD_DONE:
+            return {
+                ...state,
+                isLoading: false,
             }
 
         default:

@@ -1,5 +1,5 @@
 // Acá importamos las types
-import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ACTUALIZAR_ESTADO_GAMES, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME } from './types';
+import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ACTUALIZAR_ESTADO_GAMES, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME, STANDBY_LOAD, LOAD_DONE } from './types';
 
 import axios from 'axios';
 
@@ -195,12 +195,24 @@ export const deleteGameCreated = (id) => {
 }
 
 export const deleteGame = (id) => {
-    return{
+    return {
         type: DELETE_GAME,
         payload: id
     }
 };
 
+export const loading = () => {
+    return {
+        type: STANDBY_LOAD,
+        payload: false,
+    }
+};
 
+export const loaded = () => {
+    return {
+        type: LOAD_DONE,
+        payload: true,
+    }
+};
 
 

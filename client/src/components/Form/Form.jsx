@@ -2,16 +2,19 @@ import style from './Form.module.css';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actualizarGames, addGame, postGame } from "../../redux/actions/actions";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // importamos nuestro archivo validate
 import validate from './validation';
+import Loading from '../Loading/Loading';
 
 const Form = () => {
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const genres = useSelector((state) => state.genres);
+
+    const [loading, setLoading] = useState(false);
 
     const optionsGenres = Array.isArray(genres)
         ? genres.map((genre) => ({
@@ -94,120 +97,135 @@ const Form = () => {
     const submitHandler = (event) => {
         event.preventDefault();
 
-        const createGame = dispatch(postGame(form));
-        if (createGame) {
-            dispatch(addGame());
-            dispatch(actualizarGames());
+        setLoading(true); // Muestra el componente Loading
+        setTimeout(async () => {
+            const createGame = dispatch(postGame(form));
+            if (createGame) {
+                dispatch(addGame());
+                dispatch(actualizarGames());
 
-            // Limpiamos los campos del formulario
-            setForm({
-                name: "",
-                description: "",
-                platforms: [],
-                image: "",
-                released: "",
-                rating: "",
-                genreId: [],
-            });
+                // Limpiamos los campos del formulario
+                setForm({
+                    name: "",
+                    description: "",
+                    platforms: [],
+                    image: "",
+                    released: "",
+                    rating: "",
+                    genreId: [],
+                });
 
-            // navigate('/home');
-            // window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+                setLoading(false); // Oculta el componente Loading
+                await navigate("/home"); // Espera a que el estado y la navegación se completen
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        }, 4000); // Espera 3 segundos antes de enviar el formulario
     };
 
     return (
-        <div className={style.containerForm}>
+        <>
+            {
+                loading ?
+                    (<Loading />) : (
+                        <>
 
-            <h1>CREATE VIDEOGAME</h1>
+                            <div className={style.containerForm}>
 
-            <form onSubmit={submitHandler}>
+                                <h1>CREATE VIDEOGAME</h1>
 
-                <label>Name </label>
-                <input
-                    type="text"
-                    value={form.name}
-                    onChange={changeHandler}
-                    name='name'
-                    autoComplete="off"
-                    placeholder="Ingrese nombre"
-                />
-                <p>{errors.name ? errors.name : ''}</p>
+                                <form onSubmit={submitHandler}>
 
-                <label>Description </label>
-                <textarea
-                    type="text"
-                    value={form.description}
-                    onChange={changeHandler}
-                    name='description'
-                    autoComplete="off"
-                    placeholder="Ingrese una descripción..."
-                />
-                <p>{errors.description ? errors.description : ''}</p>
+                                    <label>Name </label>
+                                    <input
+                                        type="text"
+                                        value={form.name}
+                                        onChange={changeHandler}
+                                        name='name'
+                                        autoComplete="off"
+                                        placeholder="Ingrese nombre"
+                                    />
+                                    <p>{errors.name ? errors.name : ''}</p>
 
-                <label>Platforms </label>
-                <input
-                    type="text"
-                    value={form.platforms.join(', ')}
-                    onChange={changeHandlerPlatforms}
-                    name='platforms'
-                    autoComplete="off"
-                    placeholder="Separe con comas las plataformas."
-                />
-                <p>{errors.platforms ? errors.platforms : ''}</p>
+                                    <label>Description </label>
+                                    <textarea
+                                        type="text"
+                                        value={form.description}
+                                        onChange={changeHandler}
+                                        name='description'
+                                        autoComplete="off"
+                                        placeholder="Ingrese una descripción..."
+                                    />
+                                    <p>{errors.description ? errors.description : ''}</p>
 
-                <label>Image URL </label>
-                <input
-                    type="text"
-                    value={form.image}
-                    onChange={changeHandler}
-                    name='image'
-                    autoComplete="off"
-                    placeholder="Ingrese una URL de imagen"
-                />
-                <p>{errors.image ? errors.image : ''}</p>
+                                    <label>Platforms </label>
+                                    <input
+                                        type="text"
+                                        value={form.platforms.join(', ')}
+                                        onChange={changeHandlerPlatforms}
+                                        name='platforms'
+                                        autoComplete="off"
+                                        placeholder="Separe con comas las plataformas."
+                                    />
+                                    <p>{errors.platforms ? errors.platforms : ''}</p>
 
-                <label>Launch Date </label>
-                <input
-                    type="text"
-                    value={form.released}
-                    onChange={changeHandler}
-                    name='released'
-                    autoComplete="off"
-                    placeholder="Ingrese fecha: yyyy-mm-dd"
-                />
-                <p>{errors.released ? errors.released : ''}</p>
+                                    <label>Image URL </label>
+                                    <input
+                                        type="text"
+                                        value={form.image}
+                                        onChange={changeHandler}
+                                        name='image'
+                                        autoComplete="off"
+                                        placeholder="Ingrese una URL de imagen"
+                                    />
+                                    <p>{errors.image ? errors.image : ''}</p>
 
-                <label>Rating </label>
-                <input
-                    type="text"
-                    value={form.rating}
-                    onChange={changeHandler}
-                    name='rating'
-                    autoComplete="off"
-                    placeholder="Ingrese un número"
-                />
-                <p>{errors.rating ? errors.rating : ''}</p>
+                                    <label>Launch Date </label>
+                                    <input
+                                        type="text"
+                                        value={form.released}
+                                        onChange={changeHandler}
+                                        name='released'
+                                        autoComplete="off"
+                                        placeholder="Ingrese fecha: yyyy-mm-dd"
+                                    />
+                                    <p>{errors.released ? errors.released : ''}</p>
 
-                <label>Genres </label>
-                <select
-                    defaultValue={form.genreId}
-                    onChange={changeHandlerGenres}
-                    name="genreId"
-                    multiple
-                // size={optionsGenres.length} //Para que muestre todos los géneros en una lista
-                >
-                    {optionsGenres.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
-                <p>{errors.genreId ? errors.genreId : ''}</p>
+                                    <label>Rating </label>
+                                    <input
+                                        type="text"
+                                        value={form.rating}
+                                        onChange={changeHandler}
+                                        name='rating'
+                                        autoComplete="off"
+                                        placeholder="Ingrese un número"
+                                    />
+                                    <p>{errors.rating ? errors.rating : ''}</p>
 
-                <button type="submit">CREATE</button>
+                                    <label>Genres </label>
+                                    <select
+                                        defaultValue={form.genreId}
+                                        onChange={changeHandlerGenres}
+                                        name="genreId"
+                                        multiple
+                                    // size={optionsGenres.length} //Para que muestre todos los géneros en una lista
+                                    >
+                                        {optionsGenres.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <p>{errors.genreId ? errors.genreId : ''}</p>
 
-            </form>
-        </div>
+                                    <button type="submit">CREATE</button>
+
+                                </form>
+
+                            </div>
+                        </>
+                    )
+            }
+        </>
     );
 };
 

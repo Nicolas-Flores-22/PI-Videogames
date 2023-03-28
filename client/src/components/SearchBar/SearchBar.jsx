@@ -4,12 +4,18 @@ import style from './SearchBar.module.css';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGameByName, getGames, orderGameByABC, orderGamebyCreated, orderGameByGenre, orderGameByRating } from "../../redux/actions/actions";
+import Loading from '../Loading/Loading';
 
 const SearchBar = () => {
 
     const dispatch = useDispatch();
 
-    const genres = useSelector(state => state.genres)
+    const genres = useSelector(state => state.genres);
+
+    const [loading, setLoading] = useState(false);
+
+    // Estado para manejar el habilitado del botón "Search"
+    const [disabled, setDisabled] = useState(true);
 
     const [orderABC, setOrderABC] = useState("");
     const [orderRating, setOrderRating] = useState("");
@@ -18,51 +24,55 @@ const SearchBar = () => {
 
     // FILTRADO DE VIDEJUEGOS
     const handleOrderABC = (event) => {
+        setLoading(true);
         setOrderABC(event.target.value)
     };
 
     const handleOrderRating = (event) => {
+        setLoading(true);
         setOrderRating(event.target.value)
     };
 
     const handleOrderGenre = (event) => {
+        setLoading(true);
         setOrderGenre(event.target.value)
     };
 
     const handleOrderCreated = (event) => {
+        setLoading(true);
         setOrderCreated(event.target.value)
     };
 
     useEffect(() => {
         if (!orderABC)
-            dispatch(getGames());
+            dispatch(getGames()).then(() => setLoading(false));
 
         if (orderABC)
-            dispatch(orderGameByABC(orderABC));
+            dispatch(orderGameByABC(orderABC)).then(() => setLoading(false));
     }, [orderABC])
 
     useEffect(() => {
         if (!orderRating)
-            dispatch(getGames());
+            dispatch(getGames()).then(() => setLoading(false));;
 
         if (orderRating)
-            dispatch(orderGameByRating(orderRating));
+            dispatch(orderGameByRating(orderRating)).then(() => setLoading(false));
     }, [orderRating])
 
     useEffect(() => {
         if (!orderGenre)
-            dispatch(getGames());
+            dispatch(getGames()).then(() => setLoading(false));;
 
         if (orderGenre)
-            dispatch(orderGameByGenre(orderGenre));
+            dispatch(orderGameByGenre(orderGenre)).then(() => setLoading(false));
     }, [orderGenre])
 
     useEffect(() => {
         if (!orderCreated)
-            dispatch(getGames());
+            dispatch(getGames()).then(() => setLoading(false));;
 
         if (orderCreated)
-            dispatch(orderGamebyCreated(orderCreated))
+            dispatch(orderGamebyCreated(orderCreated)).then(() => setLoading(false));
     }, [orderCreated])
 
 
@@ -87,12 +97,24 @@ const SearchBar = () => {
     const onSearch = (game) => {
         // verificamos si game no está vacío después de eliminar los espacios en blanco del principio y final
         if (game.trim()) {
-            dispatch(getGameByName(game));
+            setLoading(true);
+            dispatch(getGameByName(game))
+            .then(() => dispatch(setLoading(false)))
+            .catch(() => dispatch(setLoading(false)))
             setGame('');
         } else {
             alert('El nombre del juego no puede estar vacío');
         }
     };
+
+    const onAllGames = () => {
+        setLoading(true);
+        dispatch(getGames()).then(() => setLoading(false));
+    };
+
+    useEffect(() => {
+        setDisabled(game.length === 0);
+    }, [game]);
 
     return (
         <div className={style.searchBarContainer}>
@@ -134,7 +156,19 @@ const SearchBar = () => {
                     onChange={handleChange}
                     placeholder="Ingrese nombre a buscar..."
                 />
-                <button onClick={() => onSearch(game)}>Buscar</button>
+
+                {/* {loading ? <div className={style.loader}></div> : false} */}
+
+                <button className={style.search} onClick={() => onSearch(game)} disabled={disabled}>
+                    Search
+                </button>
+
+                <button onClick={() => onAllGames()}>
+                    All Games
+                </button>
+
+                {loading && <Loading />}
+
             </div>
         </div>
     );

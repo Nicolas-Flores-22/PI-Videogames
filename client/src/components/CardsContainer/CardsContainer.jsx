@@ -1,7 +1,8 @@
 import style from './CardsContainer.module.css';
 import Card from '../Card/Card'
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Loading from '../Loading/Loading';
 
 const CardsContainer = () => {
 
@@ -10,6 +11,9 @@ const CardsContainer = () => {
 
     // Creamos un estado que controle la página actual que se está mostrando y actualizar su valor cada vez que se haga clic en el botón de "Siguiente" o "Anterior"
     const [currentPage, setCurrentPage] = useState(1);
+
+    // Creamos un estado para indicar si se está cargando o no la página
+    const [loading, setLoading] = useState(false);
 
     // Declaramos la variable donde le indicamos cuántos games tendrá por página
     const gamesPerPage = 15;
@@ -30,15 +34,30 @@ const CardsContainer = () => {
 
     // Manejamos el evento para ir a la página anterior
     const handlePrevPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (currentPage > 1) {
+            setLoading(true); // Indicamos que se está cargando la siguiente página
+            setCurrentPage(currentPage - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
 
     // Manejamos el evento para ir a la página siguiente y además hacemos que en la página se scrollee hasta los primeros elementos de la página siguiente
     const handleNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (currentPage < totalPages) {
+            setLoading(true); // Indicamos que se está cargando la siguiente página
+            setCurrentPage(currentPage + 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     };
+
+    useEffect(() => {
+        // En este efecto simulamos un tiempo de carga de 2 segundos para mostrar el componente Loading
+        const timeout = setTimeout(() => {
+            setLoading(false); // Indicamos que la siguiente página ya se ha cargado
+        }, 2000);
+
+        return () => clearTimeout(timeout); // Limpiamos el timeout si el componente se desmonta antes de que se complete el tiempo de carga
+    }, [currentPage]);
 
     return (
         <div className={style.cardsContainer}>
@@ -68,6 +87,7 @@ const CardsContainer = () => {
                 )}
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className={currentPage === totalPages ? "disabled" : ""}>Next</button>
             </div>
+            {loading && <Loading/>}
         </div>
     );
 };

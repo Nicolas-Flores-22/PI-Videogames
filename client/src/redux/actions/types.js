@@ -10,3 +10,5 @@ export const ORDER_GAME_BY_RATING = "ORDER_GAME_BY_RATING";
 export const ORDER_GAME_BY_GENRE = "ORDER_GAME_BY_GENRE"
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const DELETE_GAME = "DELETE_GAME";
+export const STANDBY_LOAD = "STANDBY_LOAD";
+export const LOAD_DONE = "LOAD_DONE";
