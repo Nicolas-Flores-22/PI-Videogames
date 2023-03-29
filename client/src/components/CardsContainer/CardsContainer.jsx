@@ -3,12 +3,15 @@ import Card from '../Card/Card'
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import Loading from '../Loading/Loading';
+import { getGenres } from '../../redux/actions/actions';
 
 const CardsContainer = () => {
 
 
     const games = useSelector(state => state.games);
 
+    useEffect(() => getGenres())
+    
     // Creamos un estado que controle la página actual que se está mostrando y actualizar su valor cada vez que se haga clic en el botón de "Siguiente" o "Anterior"
     const [currentPage, setCurrentPage] = useState(1);
 

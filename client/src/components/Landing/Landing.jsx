@@ -10,7 +10,7 @@ const Landing = () => {
 
     useEffect(() => {
         dispatch(getGames()).then(()=>dispatch(loaded()));
-        dispatch(getGenres())
+        // dispatch(getGenres())
     }, []);
 
     return (

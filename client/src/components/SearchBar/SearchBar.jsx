@@ -45,15 +45,14 @@ const SearchBar = () => {
 
     useEffect(() => {
         if (!orderABC)
-            dispatch(getGames()).then(() => setLoading(false));
-
+            setLoading(false)
         if (orderABC)
             dispatch(orderGameByABC(orderABC)).then(() => setLoading(false));
     }, [orderABC])
 
     useEffect(() => {
         if (!orderRating)
-            dispatch(getGames()).then(() => setLoading(false));;
+        setLoading(false)
 
         if (orderRating)
             dispatch(orderGameByRating(orderRating)).then(() => setLoading(false));
@@ -61,7 +60,7 @@ const SearchBar = () => {
 
     useEffect(() => {
         if (!orderGenre)
-            dispatch(getGames()).then(() => setLoading(false));;
+        setLoading(false)
 
         if (orderGenre)
             dispatch(orderGameByGenre(orderGenre)).then(() => setLoading(false));
@@ -69,7 +68,7 @@ const SearchBar = () => {
 
     useEffect(() => {
         if (!orderCreated)
-            dispatch(getGames()).then(() => setLoading(false));;
+        setLoading(false)
 
         if (orderCreated)
             dispatch(orderGamebyCreated(orderCreated)).then(() => setLoading(false));
@@ -99,8 +98,8 @@ const SearchBar = () => {
         if (game.trim()) {
             setLoading(true);
             dispatch(getGameByName(game))
-            .then(() => dispatch(setLoading(false)))
-            .catch(() => dispatch(setLoading(false)))
+                .then(() => dispatch(setLoading(false)))
+                .catch(() => dispatch(setLoading(false)))
             setGame('');
         } else {
             alert('El nombre del juego no puede estar vacío');
@@ -121,19 +120,19 @@ const SearchBar = () => {
             <div className={style.filterSelect}>
                 {/*FILTER GAMES*/}
                 <select onChange={handleOrderABC} value={orderABC}>
-                    <option value="">Order By ABC</option>
+                    <option>Order By ABC</option>
                     <option value="Ascendente">Ascendente</option>
                     <option value="Descendente">Descendente</option>
                 </select>
 
                 <select onChange={handleOrderRating} value={orderRating}>
-                    <option value="">Order Rating By</option>
+                    <option >Order Rating By</option>
                     <option value="Ascendente">Ascendente</option>
                     <option value="Descendente">Descendente</option>
                 </select>
 
                 <select onChange={handleOrderGenre} value={orderGenre}>
-                    <option value="">Order Genre By</option>
+                    <option >Order Genre By</option>
                     {/*Hacemos un mapeado de cada uno de los genres que vienen del estado global*/}
                     {genres.map(genre => (
                         <option key={genre.id} value={genre.name}>{genre.name}</option>
@@ -141,7 +140,7 @@ const SearchBar = () => {
                 </select>
 
                 <select onChange={handleOrderCreated} value={orderCreated}>
-                    <option value="">Order By</option>
+                    <option >Order By</option>
                     <option value="Created">Created</option>
                     <option value="NoCreated">Not Created</option>
                 </select>
