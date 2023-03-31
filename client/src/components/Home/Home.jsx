@@ -12,7 +12,7 @@ const Home = () => {
     // const load = useSelector(state => state.isLoading)
     const [load, setLoad] = useState(true);
 
-    dispatch(getGames())
+    dispatch(getGames()).then(() => dispatch(setLoad(false)))
     
     useEffect(() => {
         dispatch(getGenres()).then(() => dispatch(setLoad(false)));

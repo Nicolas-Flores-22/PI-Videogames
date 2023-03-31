@@ -87,6 +87,11 @@ const CardsContainer = () => {
         );
     }
 
+    // Comprobamos si gamesToShow existe antes de intentar llamar al método `map`
+    if (!gamesToShow) {
+        return null; // O devuelve algún componente de carga
+    }
+
     return (
         <div className={style.cardsContainer}>
             <div className={style.botonesPaginado}>
@@ -98,14 +103,15 @@ const CardsContainer = () => {
             </div>
 
             <div className={style.containerCards}>
+                {/* Comprobamos si gamesToShow existe antes de intentar llamar al método `map` */}
                 {
-                    gamesToShow.map((game) => {
+                    gamesToShow && gamesToShow.map((game) => {
                         return <Card
                             key={game.id}
                             id={game.id}
                             name={game.name}
                             image={game.image}
-                            genres={game.genres.map(gn => gn.name).join('  |  ')}
+                            genres={game?.genres.map(gn => gn.name).join('  |  ')}
                         />
                     })
                 }
