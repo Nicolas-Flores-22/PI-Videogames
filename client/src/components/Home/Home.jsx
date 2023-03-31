@@ -3,8 +3,8 @@ import SearchBar from "../SearchBar/SearchBar.jsx";
 import CardsContainer from "../CardsContainer/CardsContainer";
 import Loading from '../Loading/Loading'
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getGenres, loaded } from "../../redux/actions/actions";
+import { useDispatch } from "react-redux";
+import { getGames, getGenres } from "../../redux/actions/actions";
 
 const Home = () => {
 
@@ -12,6 +12,8 @@ const Home = () => {
     // const load = useSelector(state => state.isLoading)
     const [load, setLoad] = useState(true);
 
+    dispatch(getGames())
+    
     useEffect(() => {
         dispatch(getGenres()).then(() => dispatch(setLoad(false)));
         // dispatch(loaded())

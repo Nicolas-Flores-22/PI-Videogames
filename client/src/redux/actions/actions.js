@@ -1,5 +1,5 @@
 // Acá importamos las types
-import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ACTUALIZAR_ESTADO_GAMES, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME, STANDBY_LOAD, LOAD_DONE } from './types';
+import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME, STANDBY_LOAD, LOAD_DONE } from './types';
 
 import axios from 'axios';
 
@@ -67,116 +67,102 @@ export const postGame = (game) => {
     };
 };
 
-export const addGame = () => {
-
-    return async function (dispatch) {
-        const allgames = await axios.get('http://localhost:3001/videogames/games');
-        const actualizarGame = allgames.data;
-
-        dispatch({
-            type: ADD_GAME,
-            payload: actualizarGame
-        })
+export const addGame = (game) => {
+    return {
+        type: ADD_GAME,
+        payload: game
     }
 };
 
 export const orderGameByABC = (tipo) => {
-    return async function (dispatch) {
-        const allgames = await axios.get('http://localhost:3001/videogames/games');
-        const gameOrder = allgames.data;
-        let newArray;
-        if (tipo === "Ascendente") {
-            newArray = gameOrder.sort((a, b) => {
-                let nameA = a.name.toUpperCase(); // convertir a mayúsculas para ignorar mayúsculas y minúsculas
-                let nameB = b.name.toUpperCase(); // convertir a mayúsculas para ignorar mayúsculas y minúsculas
-
-                if (nameA > nameB) return 1;
-                if (nameA < nameB) return -1;
-                return 0;
-            });
-        } else {
-            newArray = gameOrder.sort((a, b) => {
-                let nameA = a.name.toUpperCase(); // convertir a mayúsculas para ignorar mayúsculas y minúsculas
-                let nameB = b.name.toUpperCase();
-                if (nameA < nameB) return 1;
-                if (nameA > nameB) return -1;
-                return 0;
-            });
-        }
-        dispatch({
-            type: ORDER_GAME_BY_ABC,
-            payload: newArray
-        })
-    };
-};
-
-export const actualizarGames = () => {
     return {
-        type: ACTUALIZAR_ESTADO_GAMES,
+        type: ORDER_GAME_BY_ABC,
+        payload: tipo
     }
 };
 
+// export const actualizarGames = () => {
+//     return {
+//         type: ACTUALIZAR_ESTADO_GAMES,
+//     }
+// };
+
 export const orderGamebyCreated = (tipo) => {
-    return async function (dispatch) {
-        const allgames = await axios.get('http://localhost:3001/videogames/games');
-        const games = allgames.data;
+    // return async function (dispatch) {
+    //     const allgames = await axios.get('http://localhost:3001/videogames/games');
+    //     const games = allgames.data;
 
-        let gamesFiltered;
-        if (tipo === 'Created') {
-            gamesFiltered = games.filter(game => game.created === true)
-            if (gamesFiltered.length === 0) {
-                return alert('No se encontraron videogames creados')
-            }
-        } else {
-            gamesFiltered = games.filter(game => game.created === false)
-        }
+    //     let gamesFiltered;
+    //     if (tipo === 'Created') {
+    //         gamesFiltered = games.filter(game => game.created === true)
+    //         if (gamesFiltered.length === 0) {
+    //             return alert('No se encontraron videogames creados')
+    //         }
+    //     } else {
+    //         gamesFiltered = games.filter(game => game.created === false)
+    //     }
 
 
-        dispatch({
-            type: ORDER_GAME_BY_CREATED,
-            payload: gamesFiltered
-        })
+    //     dispatch({
+    //         type: ORDER_GAME_BY_CREATED,
+    //         payload: gamesFiltered
+    //     })
+    // }
+
+    return {
+        type: ORDER_GAME_BY_CREATED,
+        payload: tipo
     }
 };
 
 export const orderGameByRating = (tipo) => {
-    return async function (dispatch) {
-        const allgames = await axios.get('http://localhost:3001/videogames/games');
-        const games = allgames.data;
+    // return async function (dispatch) {
+    //     const allgames = await axios.get('http://localhost:3001/videogames/games');
+    //     const games = allgames.data;
 
-        let gamesFilterRating;
-        if (tipo === 'Ascendente') {
-            gamesFilterRating = games.sort((a, b) => a.rating - b.rating);
-        } else {
-            gamesFilterRating = games.sort((a, b) => b.rating - a.rating);
-        }
+    //     let gamesFilterRating;
+    //     if (tipo === 'Ascendente') {
+    //         gamesFilterRating = games.sort((a, b) => a.rating - b.rating);
+    //     } else {
+    //         gamesFilterRating = games.sort((a, b) => b.rating - a.rating);
+    //     }
 
-        dispatch({
-            type: ORDER_GAME_BY_RATING,
-            payload: gamesFilterRating
-        })
+    //     dispatch({
+    //         type: ORDER_GAME_BY_RATING,
+    //         payload: gamesFilterRating
+    //     })
+    // }
+
+    return {
+        type: ORDER_GAME_BY_RATING,
+        payload: tipo
     }
 };
 
 export const orderGameByGenre = (tipo) => {
-    return async function (dispatch) {
-        const allgames = await axios.get('http://localhost:3001/videogames/games');
-        const games = allgames.data;
+    // return async function (dispatch) {
+    //     const allgames = await axios.get('http://localhost:3001/videogames/games');
+    //     const games = allgames.data;
 
-        // let gameFilterGenre = games.forEach(game => game.genres.name === tipo)
+    //     // let gameFilterGenre = games.forEach(game => game.genres.name === tipo)
 
-        const gameFilterGenre = games.filter(game =>
-            game.genres.some(genre => genre.name === tipo)
-        );
+    //     const gameFilterGenre = games.filter(game =>
+    //         game.genres.some(genre => genre.name === tipo)
+    //     );
 
-        if (gameFilterGenre.length === 0) {
-            return alert('No se encontraron videogames con el género seleccionado.')
-        }
+    //     if (gameFilterGenre.length === 0) {
+    //         return alert('No se encontraron videogames con el género seleccionado.')
+    //     }
 
-        dispatch({
-            type: ORDER_GAME_BY_GENRE,
-            payload: gameFilterGenre
-        })
+    //     dispatch({
+    //         type: ORDER_GAME_BY_GENRE,
+    //         payload: gameFilterGenre
+    //     })
+    // }
+
+    return {
+        type: ORDER_GAME_BY_GENRE,
+        payload: tipo
     }
 };
 

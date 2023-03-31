@@ -1,7 +1,7 @@
 import style from './Form.module.css';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { actualizarGames, addGame, postGame } from "../../redux/actions/actions";
+import { addGame, postGame } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 
 // importamos nuestro archivo validate
@@ -66,7 +66,7 @@ const Form = () => {
         // trim() y esta función elimina cualquier espacio en blano tanto al principio como al final de cada
         // plataforma infresada en el input
         const platformsArray = value.split(',').map(platform => platform.trim());
-        console.log(platformsArray)
+        // console.log(platformsArray)
         setForm({
             ...form,
             platforms: platformsArray
@@ -101,9 +101,7 @@ const Form = () => {
         setTimeout(async () => {
             const createGame = dispatch(postGame(form));
             if (createGame) {
-                dispatch(addGame());
-                dispatch(actualizarGames());
-
+                dispatch(addGame(createGame));
                 // Limpiamos los campos del formulario
                 setForm({
                     name: "",
@@ -119,7 +117,7 @@ const Form = () => {
                 await navigate("/home"); // Espera a que el estado y la navegación se completen
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
-        }, 4000); // Espera 3 segundos antes de enviar el formulario
+        }, 5000); // Espera 5 segundos antes de enviar el formulario
     };
 
     return (

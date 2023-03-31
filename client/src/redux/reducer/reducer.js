@@ -1,9 +1,9 @@
 // Importamos las actions types
-import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ACTUALIZAR_ESTADO_GAMES, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME, STANDBY_LOAD, LOAD_DONE } from "../actions/types";
+import { GET_GAMES, GET_GAME_BY_ID, GET_GENRES, ADD_GAME, GET_GAME_BY_NAME, ORDER_GAME_BY_ABC, ORDER_GAME_BY_CREATED, ORDER_GAME_BY_RATING, ORDER_GAME_BY_GENRE, CLEAN_DETAIL, DELETE_GAME, STANDBY_LOAD, LOAD_DONE } from "../actions/types";
 
 const initialState = {
     games: [],
-    // allgames: [],
+    allGames: [],
     detailGame: [],
     genres: [],
     isLoading: true,
@@ -15,7 +15,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 games: action.payload,
-                // allgames: action.payload
+                allGames: action.payload
             }
 
         case GET_GAME_BY_ID:
@@ -31,45 +31,97 @@ const rootReducer = (state = initialState, action) => {
             }
 
         case ADD_GAME:
+            state.allGames.unshift(action.payload);
             return {
                 ...state,
-                games: action.payload
+                games: [...state.allGames]
             }
 
         case GET_GAME_BY_NAME:
             return {
                 ...state,
-                games: action.payload
+                allGames: action.payload
             }
 
         case ORDER_GAME_BY_ABC:
-            return {
-                ...state,
-                games: action.payload
+            let gameFilter = [...state.allGames];
+
+            if (action.payload === 'Ascendente') {
+                gameFilter.sort((a, b) => {
+                    if (a.name > b.name) return 1;
+                    if (a.name < b.name) return -1;
+                    return 0;
+                })
+            } else {
+                gameFilter.sort((a, b) => {
+                    if (a.name < b.name) return 1;
+                    if (a.name > b.name) return -1;
+                    return 0;
+                })
             }
 
-        case ACTUALIZAR_ESTADO_GAMES:
             return {
                 ...state,
-                games: state.games
+                allGames: gameFilter
             }
+
+        // case ACTUALIZAR_ESTADO_GAMES:
+        //     return {
+        //         ...state,
+        //         games: state.games,
+        //         allGames: state.allGames
+        //     }
 
         case ORDER_GAME_BY_CREATED:
+            let gameCreated = [...state.games];
+
+            if (action.payload === 'Created') {
+                gameCreated = [...state.games].filter(game => game.created === true)
+                if (gameCreated.length === 0) {
+                    gameCreated = [...state.allGames];
+                    alert('No se encontraron videogames creados')
+                }
+            } 
+
+            if (action.payload === 'NoCreated') {
+                gameCreated = [...state.games].filter(game => game.created === false)
+            }
+
             return {
                 ...state,
-                games: action.payload
+                allGames: gameCreated
             }
 
         case ORDER_GAME_BY_RATING:
+            let gameRating = [...state.allGames];
+
+            if (action.payload === 'Ascendente') {
+                gameRating.sort((a, b) => a.rating - b.rating);
+            } else {
+                gameRating.sort((a, b) => b.rating - a.rating);
+            }
+
+            if(action.payload === undefined || action.payload === '') gameRating = [...state.allGames];
+
             return {
                 ...state,
-                games: action.payload
+                allGames: gameRating
             }
 
         case ORDER_GAME_BY_GENRE:
+            let gameGenre = action.payload === 'all' 
+            ? [...state.games] 
+            : [...state.games].filter((game) => game.genres.map(genre => genre.name).includes(action.payload))
+            
+            if (gameGenre.length === 0) {
+                gameGenre = [...state.games];
+                alert('No se encontraron videogames con el género seleccionado.')
+
+            }
+
             return {
                 ...state,
-                games: action.payload
+                allGames: gameGenre
             }
 
         case CLEAN_DETAIL:
@@ -83,6 +135,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 games: filteredGame,
+                allGames: filteredGame
             }
 
         case STANDBY_LOAD:

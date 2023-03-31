@@ -7,6 +7,7 @@ import Loading from '../Loading/Loading'
 
 
 const Detail = () => {
+    
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -25,8 +26,8 @@ const Detail = () => {
     const game = useSelector(state => state.detailGame);
 
     const handleBack = () => {
-        // navigate(-1);
         setLoading(true);
+        // navigate(-1);
         navigate('/home');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }

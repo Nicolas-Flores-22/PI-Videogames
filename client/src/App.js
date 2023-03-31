@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 
 // Importamos nuestros componentes desde componentes
@@ -17,7 +17,7 @@ function App() {
       }
 
       <Routes>
-        <Route path='/home' element={<Home />} />
+        <Route exact path='/home' element={<Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/detail/:id' element={<Detail />} />
         <Route path='/create' element={<Form />} />

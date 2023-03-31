@@ -27,12 +27,18 @@
     box-shadow: 0 0 10px #C5FCEE;
 }
 
+.navBotones button.activeButton {
+    background-color: #00C9A3;
+    color: #191520;
+    box-shadow: none;
+}
+
 .navBotones button:hover {
     background-color: #00C9A3;
     color: #191520;
 }
 
-.navImage{
+.navImage {
     box-shadow: 0 0 10px #C5FCEE;
     margin-right: 1.5rem;
     display: flex;

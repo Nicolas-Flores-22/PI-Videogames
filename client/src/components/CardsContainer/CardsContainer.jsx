@@ -7,13 +7,15 @@ import { getGenres } from '../../redux/actions/actions';
 
 const CardsContainer = () => {
 
-
-    const games = useSelector(state => state.games);
+    const games = useSelector(state => state.allGames);
 
     useEffect(() => getGenres())
-    
+
     // Creamos un estado que controle la página actual que se está mostrando y actualizar su valor cada vez que se haga clic en el botón de "Siguiente" o "Anterior"
     const [currentPage, setCurrentPage] = useState(1);
+
+    // Creamos un estado que mantendrá la página actual seleccionada
+    const [selectedPage, setSelectedPage] = useState(1);
 
     // Creamos un estado para indicar si se está cargando o no la página
     const [loading, setLoading] = useState(false);
@@ -40,6 +42,7 @@ const CardsContainer = () => {
         if (currentPage > 1) {
             setLoading(true); // Indicamos que se está cargando la siguiente página
             setCurrentPage(currentPage - 1);
+            setSelectedPage(currentPage - 1);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
@@ -49,12 +52,13 @@ const CardsContainer = () => {
         if (currentPage < totalPages) {
             setLoading(true); // Indicamos que se está cargando la siguiente página
             setCurrentPage(currentPage + 1);
+            setSelectedPage(currentPage + 1);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
     useEffect(() => {
-        // En este efecto simulamos un tiempo de carga de 2 segundos para mostrar el componente Loading
+        // En este efect simulamos un tiempo de carga de 2 segundos para mostrar el componente Loading
         const timeout = setTimeout(() => {
             setLoading(false); // Indicamos que la siguiente página ya se ha cargado
         }, 2000);
@@ -62,12 +66,34 @@ const CardsContainer = () => {
         return () => clearTimeout(timeout); // Limpiamos el timeout si el componente se desmonta antes de que se complete el tiempo de carga
     }, [currentPage]);
 
+    const handlePageClick = (page) => {
+        setLoading(true);
+        setCurrentPage(page);
+        setSelectedPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Creamos un array de botones de página 
+    const pageButtons = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageButtons.push(
+            <button
+                key={i}
+                onClick={() => handlePageClick(i)}
+                className={selectedPage === i ? style.selectedPageButton : ""}
+            >
+                {i}
+            </button>
+        );
+    }
+
     return (
         <div className={style.cardsContainer}>
             <div className={style.botonesPaginado}>
                 {currentPage > 1 && (
                     <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
                 )}
+                {pageButtons}
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className={currentPage === totalPages ? "disabled" : ""}>Next</button>
             </div>
 
@@ -88,9 +114,10 @@ const CardsContainer = () => {
                 {currentPage > 1 && (
                     <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
                 )}
+                {pageButtons}
                 <button onClick={handleNextPage} disabled={currentPage === totalPages} className={currentPage === totalPages ? "disabled" : ""}>Next</button>
             </div>
-            {loading && <Loading/>}
+            {loading && <Loading />}
         </div>
     );
 };

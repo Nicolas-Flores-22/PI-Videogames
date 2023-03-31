@@ -3,7 +3,7 @@ import style from './SearchBar.module.css';
 // import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGameByName, getGames, orderGameByABC, orderGamebyCreated, orderGameByGenre, orderGameByRating } from "../../redux/actions/actions";
+import { getGameByName, getGames, getGenres, orderGameByABC, orderGamebyCreated, orderGameByGenre, orderGameByRating } from "../../redux/actions/actions";
 import Loading from '../Loading/Loading';
 
 const SearchBar = () => {
@@ -17,63 +17,30 @@ const SearchBar = () => {
     // Estado para manejar el habilitado del botón "Search"
     const [disabled, setDisabled] = useState(true);
 
-    const [orderABC, setOrderABC] = useState("");
-    const [orderRating, setOrderRating] = useState("");
-    const [orderGenre, setOrderGenre] = useState("");
-    const [orderCreated, setOrderCreated] = useState("");
-
     // FILTRADO DE VIDEJUEGOS
+    const handleOrderGenre = (event) => {
+        setLoading(true);
+        dispatch(orderGameByGenre(event.target.value));
+        setLoading(false);
+    };
+
     const handleOrderABC = (event) => {
         setLoading(true);
-        setOrderABC(event.target.value)
+        dispatch(orderGameByABC(event.target.value));
+        setLoading(false);
     };
 
     const handleOrderRating = (event) => {
         setLoading(true);
-        setOrderRating(event.target.value)
-    };
-
-    const handleOrderGenre = (event) => {
-        setLoading(true);
-        setOrderGenre(event.target.value)
+        dispatch(orderGameByRating(event.target.value));
+        setLoading(false);
     };
 
     const handleOrderCreated = (event) => {
         setLoading(true);
-        setOrderCreated(event.target.value)
+        dispatch(orderGamebyCreated(event.target.value));
+        setLoading(false);
     };
-
-    useEffect(() => {
-        if (!orderABC)
-            setLoading(false)
-        if (orderABC)
-            dispatch(orderGameByABC(orderABC)).then(() => setLoading(false));
-    }, [orderABC])
-
-    useEffect(() => {
-        if (!orderRating)
-        setLoading(false)
-
-        if (orderRating)
-            dispatch(orderGameByRating(orderRating)).then(() => setLoading(false));
-    }, [orderRating])
-
-    useEffect(() => {
-        if (!orderGenre)
-        setLoading(false)
-
-        if (orderGenre)
-            dispatch(orderGameByGenre(orderGenre)).then(() => setLoading(false));
-    }, [orderGenre])
-
-    useEffect(() => {
-        if (!orderCreated)
-        setLoading(false)
-
-        if (orderCreated)
-            dispatch(orderGamebyCreated(orderCreated)).then(() => setLoading(false));
-    }, [orderCreated])
-
 
     // BÚSQUEDA POR NOMBRE
     const [game, setGame] = useState('');
@@ -108,6 +75,7 @@ const SearchBar = () => {
 
     const onAllGames = () => {
         setLoading(true);
+        dispatch(getGenres());
         dispatch(getGames()).then(() => setLoading(false));
     };
 
@@ -119,32 +87,31 @@ const SearchBar = () => {
         <div className={style.searchBarContainer}>
             <div className={style.filterSelect}>
                 {/*FILTER GAMES*/}
-                <select onChange={handleOrderABC} value={orderABC}>
-                    <option>Order By ABC</option>
-                    <option value="Ascendente">Ascendente</option>
-                    <option value="Descendente">Descendente</option>
-                </select>
-
-                <select onChange={handleOrderRating} value={orderRating}>
-                    <option >Order Rating By</option>
-                    <option value="Ascendente">Ascendente</option>
-                    <option value="Descendente">Descendente</option>
-                </select>
-
-                <select onChange={handleOrderGenre} value={orderGenre}>
-                    <option >Order Genre By</option>
+                <select onChange={handleOrderGenre} >
+                    <option value="all">Order Genre By</option>
                     {/*Hacemos un mapeado de cada uno de los genres que vienen del estado global*/}
                     {genres.map(genre => (
                         <option key={genre.id} value={genre.name}>{genre.name}</option>
                     ))}
                 </select>
 
-                <select onChange={handleOrderCreated} value={orderCreated}>
+                <select onChange={handleOrderABC} >
+                    <option>Order By ABC</option>
+                    <option value="Ascendente">Ascendente</option>
+                    <option value="Descendente">Descendente</option>
+                </select>
+
+                <select onChange={handleOrderRating} >
+                    <option >Order Rating By</option>
+                    <option value="Ascendente">Ascendente</option>
+                    <option value="Descendente">Descendente</option>
+                </select>
+
+                <select onChange={handleOrderCreated} >
                     <option >Order By</option>
                     <option value="Created">Created</option>
                     <option value="NoCreated">Not Created</option>
                 </select>
-
             </div>
 
             <div className={style.searchGame}>
@@ -155,8 +122,6 @@ const SearchBar = () => {
                     onChange={handleChange}
                     placeholder="Ingrese nombre a buscar..."
                 />
-
-                {/* {loading ? <div className={style.loader}></div> : false} */}
 
                 <button className={style.search} onClick={() => onSearch(game)} disabled={disabled}>
                     Search

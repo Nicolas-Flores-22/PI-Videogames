@@ -46,6 +46,13 @@
     display: none;
 }
 
+/*Estilo */
+.botonesPaginado button.selectedPageButton {
+    background-color: #00C9A3;
+    color: #191520;
+    box-shadow: none;
+}
+
 .containerCards {
     display: flex;
     flex-direction: row;
