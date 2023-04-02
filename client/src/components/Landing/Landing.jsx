@@ -1,17 +1,17 @@
 import style from './Landing.module.css';
 import { Link } from 'react-router-dom';
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getGames, getGenres, loaded } from "../../redux/actions/actions";
+// import { useEffect } from "react";
+// import { useDispatch } from "react-redux";
+// import { getGames, getGenres, loaded } from "../../redux/actions/actions";
 
 const Landing = () => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getGames()).then(()=>dispatch(loaded()));
-        // dispatch(getGenres())
-    }, []);
+    // useEffect(() => {
+    //     dispatch(getGames()).then(()=>dispatch(loaded()));
+    //     // dispatch(getGenres())
+    // }, []);
 
     return (
 

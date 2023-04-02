@@ -11,13 +11,20 @@ const Home = () => {
     const dispatch = useDispatch();
     // const load = useSelector(state => state.isLoading)
     const [load, setLoad] = useState(true);
+    
+    setTimeout(() => {
+        dispatch(getGames()).then(() => dispatch(setLoad(false)))
+        // setLoad(false);
+    }, 500)
 
-    dispatch(getGames()).then(() => dispatch(setLoad(false)))
+    // .then(() => dispatch(setLoad(false)))
     
     useEffect(() => {
-        dispatch(getGenres()).then(() => dispatch(setLoad(false)));
+        dispatch(getGenres())
+        // .then(() => dispatch(setLoad(false)));
         // dispatch(loaded())
     }, [dispatch]);
+
 
     return (
         <div>

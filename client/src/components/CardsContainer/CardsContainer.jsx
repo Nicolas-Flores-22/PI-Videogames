@@ -89,7 +89,7 @@ const CardsContainer = () => {
 
     // Comprobamos si gamesToShow existe antes de intentar llamar al método `map`
     if (!gamesToShow) {
-        return null; // O devuelve algún componente de carga
+        return null;
     }
 
     return (
@@ -111,7 +111,7 @@ const CardsContainer = () => {
                             id={game.id}
                             name={game.name}
                             image={game.image}
-                            genres={game?.genres.map(gn => gn.name).join('  |  ')}
+                            genres={game.genres?.map(gn => gn.name).join('  |  ')}
                         />
                     })
                 }

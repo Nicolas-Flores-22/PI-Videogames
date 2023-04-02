@@ -1,7 +1,7 @@
 import style from './Form.module.css';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addGame, postGame } from "../../redux/actions/actions";
+import { addGame, getGames, postGame } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 
 // importamos nuestro archivo validate
@@ -117,7 +117,7 @@ const Form = () => {
                 await navigate("/home"); // Espera a que el estado y la navegación se completen
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
-        }, 5000); // Espera 5 segundos antes de enviar el formulario
+        }, 1000); // Espera 1 segundo antes de enviar el formulario
     };
 
     return (

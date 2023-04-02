@@ -88,27 +88,6 @@ export const orderGameByABC = (tipo) => {
 // };
 
 export const orderGamebyCreated = (tipo) => {
-    // return async function (dispatch) {
-    //     const allgames = await axios.get('http://localhost:3001/videogames/games');
-    //     const games = allgames.data;
-
-    //     let gamesFiltered;
-    //     if (tipo === 'Created') {
-    //         gamesFiltered = games.filter(game => game.created === true)
-    //         if (gamesFiltered.length === 0) {
-    //             return alert('No se encontraron videogames creados')
-    //         }
-    //     } else {
-    //         gamesFiltered = games.filter(game => game.created === false)
-    //     }
-
-
-    //     dispatch({
-    //         type: ORDER_GAME_BY_CREATED,
-    //         payload: gamesFiltered
-    //     })
-    // }
-
     return {
         type: ORDER_GAME_BY_CREATED,
         payload: tipo
@@ -116,23 +95,6 @@ export const orderGamebyCreated = (tipo) => {
 };
 
 export const orderGameByRating = (tipo) => {
-    // return async function (dispatch) {
-    //     const allgames = await axios.get('http://localhost:3001/videogames/games');
-    //     const games = allgames.data;
-
-    //     let gamesFilterRating;
-    //     if (tipo === 'Ascendente') {
-    //         gamesFilterRating = games.sort((a, b) => a.rating - b.rating);
-    //     } else {
-    //         gamesFilterRating = games.sort((a, b) => b.rating - a.rating);
-    //     }
-
-    //     dispatch({
-    //         type: ORDER_GAME_BY_RATING,
-    //         payload: gamesFilterRating
-    //     })
-    // }
-
     return {
         type: ORDER_GAME_BY_RATING,
         payload: tipo
@@ -140,26 +102,6 @@ export const orderGameByRating = (tipo) => {
 };
 
 export const orderGameByGenre = (tipo) => {
-    // return async function (dispatch) {
-    //     const allgames = await axios.get('http://localhost:3001/videogames/games');
-    //     const games = allgames.data;
-
-    //     // let gameFilterGenre = games.forEach(game => game.genres.name === tipo)
-
-    //     const gameFilterGenre = games.filter(game =>
-    //         game.genres.some(genre => genre.name === tipo)
-    //     );
-
-    //     if (gameFilterGenre.length === 0) {
-    //         return alert('No se encontraron videogames con el género seleccionado.')
-    //     }
-
-    //     dispatch({
-    //         type: ORDER_GAME_BY_GENRE,
-    //         payload: gameFilterGenre
-    //     })
-    // }
-
     return {
         type: ORDER_GAME_BY_GENRE,
         payload: tipo

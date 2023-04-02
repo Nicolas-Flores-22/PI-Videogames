@@ -31,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
             }
 
         case ADD_GAME:
-            state.allGames.unshift(action.payload);
+            state.allGames.push(action.payload);
             return {
                 ...state,
                 games: [...state.allGames]

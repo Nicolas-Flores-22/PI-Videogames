@@ -7,7 +7,6 @@ import Loading from '../Loading/Loading'
 
 
 const Detail = () => {
-    
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
