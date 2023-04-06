@@ -1,17 +1,5 @@
 const { Genre } = require('../db.js')
 
-// Creamos la función de getAllGenres donde retorna un arreglo de objetos, 
-// donde cada objeto es un género con su información
-// Esta función devuelve los géneros de la base de datos
-// const getAllGenres = async () => {
-//     try {
-//         const allGenres = await Genre.findAll();
-//         return allGenres;
-//     } catch (error) {
-//         return { error: error.message };
-//     }
-// };
-
 const axios = require('axios');
 require('dotenv').config();
 const { API_KEY } = process.env;

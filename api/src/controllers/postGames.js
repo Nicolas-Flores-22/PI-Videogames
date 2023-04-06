@@ -3,7 +3,7 @@ const { Videogame } = require('../db.js')
 const postGames = async (name, description, platforms, image, released, rating, genreId) => {
 
 
-    if (!name || !description || !platforms || !image || !released || !rating) throw new Error('Faltan datos obligatorios.');
+    if (!name || !description || !platforms || !image || !released || !rating) throw new Error('Mandatory data is missing.');
 
     const newGame = await Videogame.create({ name, description, platforms, image, released, rating });
     // console.log(newGame);

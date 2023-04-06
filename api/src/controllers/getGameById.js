@@ -40,7 +40,7 @@ const getGameById = async (id) => {
         }
     }
 
-    if (!videogame) throw new Error(`Hubo un problema al obtener el videogame con el id: ${id}`);
+    if (!videogame) throw new Error(`There was a problem getting the videogame with the id: ${id}`);
 
     return videogame;
 };

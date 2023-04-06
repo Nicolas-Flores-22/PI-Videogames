@@ -10,7 +10,7 @@ genresRouter.get('/', async (request, response) => {
     try {
         const allGenres = await getAllGenres();
         
-        if(!allGenres) throw new Error('Hubo un problema al obtener las categorías.')
+        if(!allGenres) throw new Error('There was a problem getting the categories.')
 
         response.status(200).json(allGenres);
     } catch (error) {

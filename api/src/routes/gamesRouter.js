@@ -24,7 +24,7 @@ gamesRouter.get('/', async (request, response) => {
 gamesRouter.get('/name', async (request, response) => {
     const games = await getGamesByName(request.query.name);
     try {
-        if (games.length === 0) throw new Error(`No se encontraron resultados con el nombre ingresado: '${request.query.name}'`);
+        if (games.length === 0) throw new Error(`No results were found with the name entered: '${request.query.name}'`);
 
         if (games.error) return response.status(404).json(games);
         return response.status(200).json(games);
@@ -53,7 +53,7 @@ gamesRouter.post('/', async (request, response) => {
         const newGame = await postGames(name, description, platforms, image, released, rating, genreId);
 
         // return response.status(201).json(newGame);
-        return response.status(201).send('Videogame creado con éxito');
+        return response.status(201).send('Videogame successfully created');
     } catch (error) {
         return response.status(404).send(error.message);
     }
@@ -68,10 +68,10 @@ gamesRouter.delete('/:id', async (request, response) => {
         if (uuidRegex.test(id)){
             await deleteGameById(id);
         } else {
-            throw new Error ('El valor del ID es incorrecto.')
+            throw new Error ('The ID value is incorrect.')
         }
 
-        return response.status(200).send('Videogame elimitado exitosamente.');
+        return response.status(200).send('Videogame successfully removed.');
     } catch (error) {
         return response.status(404).send(error.message)
     }

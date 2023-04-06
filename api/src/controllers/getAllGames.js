@@ -25,7 +25,7 @@ const getAllGames = async () => {
     // console.log('estoy en getAllGames', gamesApi);
     const gamesFiltered = [...gamesDB, ...gamesApi];
 
-    if (gamesFiltered.length === 0) throw new Error('No hay ningún videojuego registrado');
+    if (gamesFiltered.length === 0) throw new Error('There is no registered video game');
 
     // Retornamos solo 100 videojuegos que incluye los de la base de datos y también los de la api
     // Para eso hacemos un slice en gamesFiltered para que solo retorne 100 nada más
