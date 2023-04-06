@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import style from './About.module.css';
-import Loading from '../Loading/Loading'
+import Loading from '../Loading/Loading';
+import perfil from '../../assets/perfil.jpg'
 
 const About = () => {
 
@@ -8,7 +9,7 @@ const About = () => {
 
     setTimeout(() => {
         setLoad(false);
-    }, 1000)
+    }, 1500)
 
     return (
         <div className={style.containerAbout}>
@@ -24,7 +25,7 @@ const About = () => {
                                 <p>If you need more information about me or want to work together on a project, do not hesitate to contact me.</p>
                             </div>
                             <div className={style.myPhoto}>
-                                <img src="https://media.licdn.com/dms/image/D4D03AQGzHYrRG_4Pwg/profile-displayphoto-shrink_800_800/0/1669349490038?e=1685577600&v=beta&t=F4PKcrjDsfYM9LJ_D39xghW_7eckmsQY65UwbDR1Ns8" alt="FotoPersonal" />
+                                <img src={perfil} alt="Foto-perfil" />
                             </div>
                         </div>
                     </>

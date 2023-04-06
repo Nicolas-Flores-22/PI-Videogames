@@ -82,10 +82,17 @@
     }
 
     .searchGame {
+        display: flex;
+        flex-direction: column;
         justify-content: center;
-        margin: 0;
-        /* margin-left: 1.5rem;*/
+        align-items: center;
         margin-top: 0.8rem;
+    }
+
+    .searchGame input,
+    .searchGame button {
+        flex-basis: 100%;
+        margin-bottom: 0.1rem;
     }
 
     .searchGame select {
