@@ -83,6 +83,7 @@
   transition: all 0.5s;
   transform: translate(0, 0.4em);
   box-shadow: 0 0 0 0 #C5FCEE;
+  cursor: pointer;
 }
 
 .button span:not(hover) {

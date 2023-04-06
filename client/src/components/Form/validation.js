@@ -12,44 +12,44 @@ const validate = (form) => {
 
     //VALIDANDO NAME
     if (!form.name) {
-        errors.name = 'El nombre no puede estar vacío.';
+        errors.name = 'The name cannot be empty.';
     } else {
-        if (form.name.length < 2) {
-            errors.name = 'El nombre debe ser mayor a 1 caracter.';
+        if (form.name.length < 1 || form.name.length > 50) {
+            errors.name = 'The name must be longer than 1 character and shorter than 50 characters.';
         } else if (specialCharsRegex.test(form.name)) {
-            errors.name = 'El nombre no puede contener caracteres especiales.';
+            errors.name = 'The name cannot contain special characters.';
         } else if (!spacesRegex.test(form.name)) {
-            errors.name = 'El nombre no puede tener espacios vacíos al comienzo o al final.';
+            errors.name = 'The name cannot have spaces at the beginning or at the end.';
         }
     }
 
     //VALIDANDO DESCRIPTION
     if (!form.description) {
-        errors.description = 'La descripción no puede estar vacía.';
+        errors.description = 'The description cannot be empty.';
     } else {
         if (form.description.length < 5) {
-            errors.description = 'La descripción no puede ser muy corta.';
+            errors.description = 'The description cannot be too short.';
         } else if (specialCharsRegex.test(form.description)) {
-            errors.description = 'La descripción no puede contener caracteres especiales.';
+            errors.description = 'The description cannot contain special characters.';
         } else if (!spacesRegex.test(form.description)) {
-            errors.description = 'La descripción no puede tener espacios vacíos al comienzo o al final.';
+            errors.description = 'The description cannot have gaps at the beginning or at the end.';
         }
     }
 
     //VALIDANDO PLATFORM
     if (!form.platforms || form.platforms.length === 0) {
-        errors.platforms = 'Debe ingresar al menos una plataforma.';
+        errors.platforms = 'You must enter at least one platform.';
     } else {
         for (let i = 0; i < form.platforms.length; i++) {
             const platform = form.platforms[i];
             if (platform.length < 2) {
-                errors.platforms = 'Cada plataforma debe tener al menos 2 caracteres.';
+                errors.platforms = 'Each platform must have at least 2 characters.';
                 break;
             } else if (specialCharsRegex.test(platform)) {
-                errors.platforms = 'Las plataformas no pueden contener caracteres especiales.';
+                errors.platforms = 'Platforms may not contain special characters.';
                 break;
             } else if (!spacesRegex.test(platform)) {
-                errors.platforms = 'Las plataformas no pueden tener espacios vacíos al comienzo o al final.';
+                errors.platforms = 'Platforms may not have empty spaces at the beginning or at the end.';
                 break;
             }
         }
@@ -57,20 +57,20 @@ const validate = (form) => {
 
     //VALIDANDO IMAGE
     if (!form.image) {
-        errors.image = 'La imagen no puede estar vacía.';
+        errors.image = 'The image cannot be empty.';
     } else {
         const isValidUrl = urlRegex.test(form.image);
         if (!isValidUrl) {
-            errors.image = 'Por favor ingrese una URL de imagen válida.';
+            errors.image = 'Please enter a valid image URL.';
         }
     }
 
     //VALIDANDO RELEASED
     if (!form.released) {
-        errors.released = 'La fecha de publicación no puede estar vacía.';
+        errors.released = 'The date of publication cannot be empty.';
     } else {
         if (!dateRegex.test(form.released)) {
-            errors.released = 'Formato de fecha inválido';
+            errors.released = 'Invalid date format.';
         } else {
             // spliteamos el año, mes y día ingresados por el input
             const parts = form.released.split('-');
@@ -90,25 +90,25 @@ const validate = (form) => {
 
             // Verificamos si el mes y el día son válidos utilizando los métodos getMonth() y getDate() de Date 
             if (date.getMonth() !== month || date.getDate() !== day) {
-                errors.released = 'Fecha inválida.'
+                errors.released = 'Invalid date.'
             }
         }
     }
 
     //VALIDANDO RATING
     if (!form.rating) {
-        errors.rating = 'El valoración no puede estar vacía.'
+        errors.rating = 'The qualification cannot be empty.'
     } else if (!Number.isInteger(Number(form.rating))) {
-        errors.rating = 'La calificación debe ser un número entero.';
+        errors.rating = 'The rating must be a whole number.';
     } else if (Number(form.rating) < 1) {
-        errors.rating = 'La calificación no puede ser menor que 1.';
+        errors.rating = 'The rating cannot be less than 1.';
     } else if (Number(form.rating) > 5) {
-        errors.rating = 'La calificación no puede ser mayor que 5.';
+        errors.rating = 'The rating cannot be higher than 5.';
     }
 
     //VALIDANDO GENRES
     if (!form.genreId.length) {
-        errors.genreId = 'Puede seleecionar uno o varios géneros (combinando las teclas "Ctrl + clic").'
+        errors.genreId = 'You can select one or several genres (by combining the keys "Ctrl + click").'
     }
 
     return errors;

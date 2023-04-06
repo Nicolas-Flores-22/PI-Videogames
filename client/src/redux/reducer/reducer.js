@@ -65,13 +65,6 @@ const rootReducer = (state = initialState, action) => {
                 allGames: gameFilter
             }
 
-        // case ACTUALIZAR_ESTADO_GAMES:
-        //     return {
-        //         ...state,
-        //         games: state.games,
-        //         allGames: state.allGames
-        //     }
-
         case ORDER_GAME_BY_CREATED:
             let gameCreated = [...state.games];
 
@@ -79,7 +72,7 @@ const rootReducer = (state = initialState, action) => {
                 gameCreated = [...state.games].filter(game => game.created === true)
                 if (gameCreated.length === 0) {
                     gameCreated = [...state.allGames];
-                    alert('No se encontraron videogames creados')
+                    alert('No created videogames found')
                 }
             } 
 
@@ -115,7 +108,7 @@ const rootReducer = (state = initialState, action) => {
             
             if (gameGenre.length === 0) {
                 gameGenre = [...state.games];
-                alert('No se encontraron videogames con el género seleccionado.')
+                alert('No videogames found with the selected genre.')
 
             }
 

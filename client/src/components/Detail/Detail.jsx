@@ -32,7 +32,7 @@ const Detail = () => {
     }
 
     const onClose = async (id) => {
-        if (window.confirm('¿Estás seguro de eliminar el videogame?')) {
+        if (window.confirm('Are you sure you want to delete the videogame?')) {
             setLoading(true); // mostrar el componente Loading
 
             await dispatch(deleteGameCreated(id));
@@ -59,19 +59,19 @@ const Detail = () => {
                                 <hr />
                                 <h1>{game?.name}</h1>
                                 <hr />
-                                <h3>Descripción </h3>
+                                <h3>Description </h3>
                                 <p>{game?.description}</p>
                                 <hr />
-                                <h3>Fecha Lanzamiento </h3>
+                                <h3>Launch date </h3>
                                 <p>{game?.released}</p>
                                 <hr />
                                 <h3>Rating </h3>
                                 <p>{game?.rating}</p>
                                 <hr />
-                                <h3>Plataformas </h3>
+                                <h3>Platforms </h3>
                                 <p>{game?.platforms}</p>
                                 <hr />
-                                <h3>Géneros </h3>
+                                <h3>Genres </h3>
                                 <p>{game?.genres && game.genres.map(gn => gn.name).join('  |  ')}</p>
                             </div>
 

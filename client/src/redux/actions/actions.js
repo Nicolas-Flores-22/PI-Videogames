@@ -81,12 +81,6 @@ export const orderGameByABC = (tipo) => {
     }
 };
 
-// export const actualizarGames = () => {
-//     return {
-//         type: ACTUALIZAR_ESTADO_GAMES,
-//     }
-// };
-
 export const orderGamebyCreated = (tipo) => {
     return {
         type: ORDER_GAME_BY_CREATED,

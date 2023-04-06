@@ -1,7 +1,7 @@
 import style from './Form.module.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addGame, getGames, postGame } from "../../redux/actions/actions";
+import { addGame, postGame } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 
 // importamos nuestro archivo validate
@@ -15,6 +15,7 @@ const Form = () => {
     const genres = useSelector((state) => state.genres);
 
     const [loading, setLoading] = useState(false);
+
 
     const optionsGenres = Array.isArray(genres)
         ? genres.map((genre) => ({
@@ -94,6 +95,29 @@ const Form = () => {
         );
     };
 
+    // Estado para manejar si los campos están completos o no
+    const [disabled, setDisabled] = useState(true);
+
+    // Función que verifique si los campos del formulario están vacíos
+    const checkFields = () => {
+        if (
+            form.name === "" ||
+            form.description === "" ||
+            form.platforms.length === 0 ||
+            form.image === "" ||
+            form.released === "" ||
+            form.rating === "" ||
+            form.genreId.length === 0
+        ) {
+            return true;
+        }
+        return false;
+    };
+
+    useEffect(() => {
+        setDisabled(checkFields());
+    }, [form]);
+
     const submitHandler = (event) => {
         event.preventDefault();
 
@@ -140,7 +164,7 @@ const Form = () => {
                                         onChange={changeHandler}
                                         name='name'
                                         autoComplete="off"
-                                        placeholder="Ingrese nombre"
+                                        placeholder="Please enter the name"
                                     />
                                     <p>{errors.name ? errors.name : ''}</p>
 
@@ -151,7 +175,7 @@ const Form = () => {
                                         onChange={changeHandler}
                                         name='description'
                                         autoComplete="off"
-                                        placeholder="Ingrese una descripción..."
+                                        placeholder="Please enter a description..."
                                     />
                                     <p>{errors.description ? errors.description : ''}</p>
 
@@ -162,7 +186,7 @@ const Form = () => {
                                         onChange={changeHandlerPlatforms}
                                         name='platforms'
                                         autoComplete="off"
-                                        placeholder="Separe con comas las plataformas."
+                                        placeholder="Separate platforms with commas."
                                     />
                                     <p>{errors.platforms ? errors.platforms : ''}</p>
 
@@ -173,7 +197,7 @@ const Form = () => {
                                         onChange={changeHandler}
                                         name='image'
                                         autoComplete="off"
-                                        placeholder="Ingrese una URL de imagen"
+                                        placeholder="Enter a URL for the image"
                                     />
                                     <p>{errors.image ? errors.image : ''}</p>
 
@@ -184,7 +208,7 @@ const Form = () => {
                                         onChange={changeHandler}
                                         name='released'
                                         autoComplete="off"
-                                        placeholder="Ingrese fecha: yyyy-mm-dd"
+                                        placeholder="Enter the date: yyyy-mm-dd"
                                     />
                                     <p>{errors.released ? errors.released : ''}</p>
 
@@ -195,7 +219,7 @@ const Form = () => {
                                         onChange={changeHandler}
                                         name='rating'
                                         autoComplete="off"
-                                        placeholder="Ingrese un número"
+                                        placeholder="Please enter a number"
                                     />
                                     <p>{errors.rating ? errors.rating : ''}</p>
 
@@ -215,7 +239,7 @@ const Form = () => {
                                     </select>
                                     <p>{errors.genreId ? errors.genreId : ''}</p>
 
-                                    <button type="submit">CREATE</button>
+                                    <button type="submit" disabled={disabled}>CREATE</button>
 
                                 </form>
 
