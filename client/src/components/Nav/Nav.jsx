@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 const Nav = () => {
     const location = useLocation();
     const [activeButton, setActiveButton] = useState("");
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         switch (location.pathname) {
@@ -26,13 +27,55 @@ const Nav = () => {
         }
     }, [location.pathname]);
 
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    const renderButtons = () => (
+        <>
+            <Link to="/">
+                <button>LOGOUT</button>
+            </Link>
+            <Link to="/about">
+                <button
+                    className={activeButton === "ABOUT" ? style.activeButton : ""}
+                >
+                    ABOUT
+                </button>
+            </Link>
+            <Link to="/home">
+                <button
+                    className={activeButton === "HOME" ? style.activeButton : ""}
+                >
+                    HOME
+                </button>
+            </Link>
+            <Link to="/create">
+                <button
+                    className={activeButton === "CREATE" ? style.activeButton : ""}
+                >
+                    CREATE
+                </button>
+            </Link>
+        </>
+    );
+
+    const renderMobileMenu = () => (
+        <details className={style.mobileMenu}>
+            <summary>MENU</summary>
+            {renderButtons()}
+        </details>
+    );
+
     return (
         <div className={style.navContainer}>
             <div className={style.navBotones}>
-                <Link to='/'><button >LOGOUT</button></Link>
-                <Link to='/about'><button className={activeButton === "ABOUT" ? style.activeButton : ""}>ABOUT</button></Link>
-                <Link to='/home'><button className={activeButton === "HOME" ? style.activeButton : ""}>HOME</button></Link>
-                <Link to='/create'><button className={activeButton === "CREATE" ? style.activeButton : ""}>CREATE</button></Link>
+                {isMobile ? renderMobileMenu() : renderButtons()}
             </div>
             <div className={style.navImage}>
                 <img src={gamer} alt="gamer-videogame" />
